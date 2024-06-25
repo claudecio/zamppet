@@ -37,4 +37,26 @@
                 Helper::gerarNotificacao("danger","Ocorreu um erro durante a execução da solicitação!");
             }
         }
+
+        public function listarDadosPet(int $id) {
+            try {
+                $this -> db -> query("SELECT * FROM pets WHERE id = :id");
+                $this -> db -> bind(":id", $id);
+                $dados_pet = $this -> db -> fetchSingleResult();
+                $this -> db -> query("SELECT * FROM prontuarios WHERE pets_id = :pets_id");
+                $this -> db -> bind(":pets_id", $id);
+                $idProntuario = $this -> db -> fetchSingleResult()['id'];
+                $this -> db -> query("SELECT * FROM prontuarios_registros WHERE prontuarios_id = :prontuarios_id AND deleted_at IS NULL ORDER BY data DESC");
+                $this -> db -> bind(":prontuarios_id", $idProntuario);
+                $registrosProntuario = $this -> db -> fetchAllResults();
+
+                return [
+                    'dados_pet' => $dados_pet,
+                    'idProntuario' => $idProntuario,
+                    'registrosProntuario' => $registrosProntuario
+                ];
+            } catch (Exception $e) {
+                Helper::gerarNotificacao("danger","Ocorreu um erro durante a execução da solicitação!");
+            }
+        }
     }
