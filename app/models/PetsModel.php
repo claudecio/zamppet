@@ -46,7 +46,7 @@
                 $this -> db -> query("SELECT * FROM prontuarios WHERE pets_id = :pets_id");
                 $this -> db -> bind(":pets_id", $id);
                 $idProntuario = $this -> db -> fetchSingleResult()['id'];
-                $this -> db -> query("SELECT * FROM prontuarios_registros WHERE prontuarios_id = :prontuarios_id AND deleted_at IS NULL ORDER BY data DESC");
+                $this -> db -> query("SELECT * FROM prontuarios_registros WHERE prontuarios_id = :prontuarios_id AND deleted_at IS NULL ORDER BY data_registro DESC");
                 $this -> db -> bind(":prontuarios_id", $idProntuario);
                 $registrosProntuario = $this -> db -> fetchAllResults();
 
@@ -55,6 +55,39 @@
                     'idProntuario' => $idProntuario,
                     'registrosProntuario' => $registrosProntuario
                 ];
+            } catch (Exception $e) {
+                Helper::gerarNotificacao("danger","Ocorreu um erro durante a execução da solicitação!");
+            }
+        }
+
+        public function registroProntuario(array $dados_registro) {
+            try {
+                $this -> db -> query("INSERT INTO prontuarios_registros (prontuarios_id, funcionarios_id, data_registro, observacao) VALUES (:prontuarios_id, :funcionarios_id, :data_registro, :observacao)");
+                $this -> db -> bind(":prontuarios_id", $dados_registro['prontuarios_id']);
+                $this -> db -> bind(":funcionarios_id", $dados_registro['funcionarios_id']);
+                $this -> db -> bind(":data_registro", $dados_registro['data_registro']);
+                $this -> db -> bind(":observacao", $dados_registro['observacao']);
+                $this -> db -> executeQuery();
+                Helper::gerarNotificacao("success", "Registro salvo com sucesso!");
+                header("Refresh: 0");
+            } catch (Exception $e) {
+                Helper::gerarNotificacao("danger","Ocorreu um erro durante a execução da solicitação! $e");
+            }
+        }
+
+        public function editarPet(array $dados_pet) {
+            try {
+                $this -> db -> query("UPDATE pets SET nome = :nome, especie = :especie, raca = :raca, sexo = :sexo, dataNascimento = :dataNascimento, updated_at = CURRENT_TIMESTAMP WHERE id = :id");
+                $this -> db -> bind(":id", $dados_pet["id"]);
+                $this -> db -> bind(":nome", $dados_pet["nome"]);
+                $this -> db -> bind(":especie", $dados_pet["especie"]);
+                $this -> db -> bind(":raca", $dados_pet["raca"]);
+                $this -> db -> bind(":sexo", $dados_pet["sexo"]);
+                $this -> db -> bind(":dataNascimento", empty($dados_pet["dataNascimento"]) ? NULL : $dados_pet["dataNascimento"]);
+                $this -> db -> executeQuery();
+
+                Helper::gerarNotificacao("success", "Pet atualizado com sucesso!");
+                Helper::redirecionarUsuario("pets/detalhar/".$dados_pet['clientes_id']);
             } catch (Exception $e) {
                 Helper::gerarNotificacao("danger","Ocorreu um erro durante a execução da solicitação!");
             }
