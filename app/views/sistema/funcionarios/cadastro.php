@@ -24,8 +24,8 @@
                     <input type="text" class="form-control" name="nome" value="<?=$dados_funcionario['nome']?>" style="text-transform: uppercase;" maxlength="50" required>
                 </div>
                 <div class="col-md-4">
-                    <label class="form-label">Data Admissão<sup class="text-danger">*</sup></label>
-                    <input type="date" class="form-control" name="data_admissao" value="<?=$dados_funcionario['data_admissao']?>" style="text-transform: uppercase;" required>
+                    <label class="form-label">Data Admissão</label>
+                    <input type="date" class="form-control" name="data_admissao" value="<?=$dados_funcionario['data_admissao']?>" style="text-transform: uppercase;">
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">CPF<sup class="text-danger">*</sup></label>
@@ -41,8 +41,30 @@
                     </select>
                 </div>
                 <div class="col-md-12">
+                    <label class="form-label">E-mail<sup class="text-danger">*</sup></label>
+                    <input type="email" class="form-control" name="email" value="<?=$dados_funcionario['email']?>" style="text-transform: lowercase;" required>
+                </div>
+                <div class="col-md-12">
                     <a href="<?=URL?>/funcionarios" class="btn btn-secondary">Voltar</a>
-                    <button type="submit" name="cadastrar_funcionario" class="btn btn-success">Cadastrar</button>
+                    <button class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#cadastrar_funcionario">Cadastrar</button>
+                </div>
+
+                <div class="modal fade" id="cadastrar_funcionario" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Confirmar Edição</h1>
+                            </div>
+                            <div class="modal-body">
+                                Você deseja atualizar o funcionário?<br>
+                                A senha de acesso será: <b>12345678</b>
+                            </div>
+                            <div class="modal-footer justify-content-start">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                <button class="btn btn-success" name="cadastrar_funcionario" type="submit" name="atualizar_dados">Cadastrar</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>
