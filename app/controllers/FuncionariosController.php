@@ -24,7 +24,7 @@
 
         public function cadastrar() {
             if(isset($_POST['cadastrar_funcionario'])) {
-                if(empty($_POST['nome']) || empty($_POST['cpf']) || empty($_POST['cargo']) || empty($_POST['data_admissao'])) {
+                if(empty($_POST['nome']) || empty($_POST['cpf']) || empty($_POST['cargo']) || empty($_POST['email'])) {
                     Helper::gerarNotificacao("warning", "Os campos com * são obrigatórios!");
                 }
 
@@ -36,6 +36,7 @@
                     'cpf' => $_POST['cpf'],
                     'cargo' => strtoupper($cargo),
                     'data_admissao' => $_POST['data_admissao'],
+                    'email' => strtolower($_POST['email'])
                 ];
 
                 $this -> funcionariosModel -> cadastrarFuncionario($dados_funcionario);
@@ -46,6 +47,7 @@
                     'cpf' => '',
                     'cargo' => '',
                     'data_admissao' => '',
+                    'email' => ''
                 ];
             }
             $this -> view("sistema/funcionarios/cadastro", [
@@ -85,6 +87,7 @@
                     'cpf' => $_POST['cpf'],
                     'cargo' => strtoupper($cargo),
                     'data_admissao' => $_POST['data_admissao'],
+                    'email' => $_POST['email'],
                 ];
 
                 $this -> funcionariosModel -> editarFuncionario($dados_funcionario);
@@ -97,6 +100,7 @@
                     'cpf' => $dadosFuncionario['cpf'],
                     'cargo' => $dadosFuncionario['cargo'],
                     'data_admissao' => $dadosFuncionario['data_admissao'],
+                    'email' => $dadosFuncionario['email'],
                 ];
             }
 

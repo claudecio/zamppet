@@ -24,7 +24,7 @@
                     <input type="text" class="form-control" name="nome" value="<?=$dados_funcionario['nome']?>" style="text-transform: uppercase;" maxlength="50" disabled>
                 </div>
                 <div class="col-md-4">
-                    <label class="form-label">Data Admissão<sup class="text-danger">*</sup></label>
+                    <label class="form-label">Data Admissão</label>
                     <input type="date" class="form-control" name="data_admissao" value="<?=$dados_funcionario['data_admissao']?>" style="text-transform: uppercase;" disabled>
                 </div>
                 <div class="col-md-6">
@@ -34,6 +34,10 @@
                 <div class="col-md-6">
                     <label class="form-label">Cargo<sup class="text-danger">*</sup></label>
                     <input type="text" class="form-control" name="cargo" value="<?=$dados_funcionario['cargo']?>" style="text-transform: uppercase;" disabled>
+                </div>
+                <div class="col-md-12">
+                    <label class="form-label">E-mail<sup class="text-danger">*</sup></label>
+                    <input type="email" class="form-control" name="email" value="<?=$dados_funcionario['email']?>" style="text-transform: lowercase;" disabled>
                 </div>
                 <div class="col-md-12">
                     <a href="<?=URL?>/funcionarios" class="btn btn-secondary">Voltar</a>
